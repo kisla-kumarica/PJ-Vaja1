@@ -17,9 +17,12 @@ public class Vaja1 {
         List<Integer> kolicine2=new ArrayList<Integer>(Arrays.asList(1,3));
         List<Artikel> artikli3=new ArrayList<Artikel> (Arrays.asList(new Artikel("Mars",.69,Artikel.Davcna_stopnja.SPLOSNA),new Artikel("bela štruca",1.29,Artikel.Davcna_stopnja.SPLOSNA)));
         List<Integer> kolicine3=new ArrayList<Integer>(Arrays.asList(4,2));
-        a.add(new Racun(artikli,kolicine,"izdajatelj", podjetja.get(0).getDavcna_st()));
-        a.add(new Racun(artikli2,kolicine2,"izdajatelj2", podjetja.get(1).getDavcna_st()));
-        a.add(new Racun(artikli3,kolicine3,"izdajatelj3", podjetja.get(2).getDavcna_st()));
+        Artikli temp=new Artikli(artikli,kolicine);
+        Artikli temp2=new Artikli(artikli2,kolicine2);
+        Artikli temp3=new Artikli(artikli3,kolicine3);
+        a.add(new Racun(temp,"izdajatelj", podjetja.get(0).getDavcna_st(),"992019040210"));
+        a.add(new Racun(temp2,"izdajatelj2", podjetja.get(1).getDavcna_st(),null));
+        a.add(new Racun(temp3,"izdajatelj3", podjetja.get(2).getDavcna_st(), null));
 
         for(var podjetje:podjetja)
         if(a.get(2).getDavcna_st_podjetja()==podjetje.davcna_st)
@@ -37,6 +40,13 @@ public class Vaja1 {
 
         System.out.println("Racun 1 toString()");
         System.out.println(a.get(0).toString());
+
+        Companies comps =new Companies(podjetja);
+       Helper.writeToFile(comps.toJson(),"test.json");
+       Companies comps2=new Companies();
+       comps2.fromJson(Helper.readFromFile("test.json"));
+       if(comps.size()==comps2.size())
+           System.out.println("Po izvazanju ter uvazanju v JSON datoteko size() enak  ("+comps.size()+")");
 
     }
 }

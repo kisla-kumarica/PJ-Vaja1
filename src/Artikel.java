@@ -1,8 +1,11 @@
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 
 public class Artikel implements Searchable {
     private String ime;
     private double cena;
+    private String EAN;
 
 
     public Artikel(String ime, double cena, Davcna_stopnja stopnja)
@@ -10,7 +13,57 @@ public class Artikel implements Searchable {
         this.ime = ime;
         this.cena = cena;
         this.stopnja=stopnja;
+        generateEAN();
         addDDV();
+    }
+
+
+    public void setOddelek(String oddelek)
+    {
+        EAN=EAN.substring(2);
+        EAN=oddelek+EAN;
+    }
+    public void setTeza(String teza)
+    {
+        String EAN1=EAN.substring(0,7);
+        EAN1+=teza;
+        EAN=EAN1+EAN.substring(11);
+
+    }
+    public void setIdIzdelka(String id)
+    {
+        String EAN1=EAN.substring(0,2);
+        EAN1+=id;
+        EAN=EAN1+EAN.substring(7);
+    }
+
+
+    public String getOddelek()
+    {
+        if(EAN!=null)
+        return EAN.substring(0,2);
+        else
+            return "";
+    }
+    public String getTeza()
+    {
+        if(EAN!=null)
+            return EAN.substring(7,11);
+        else
+            return "";
+    }
+    public String getIdIzdelka()
+    {
+        if(EAN!=null)
+            return EAN.substring(2,7);
+        else
+            return "";
+    }
+    private void generateEAN()
+    {
+        for(int i = 0;i<12;i++)
+            EAN+=(int)(Math.random()*10);
+
     }
 
     @Override
@@ -45,6 +98,10 @@ public class Artikel implements Searchable {
         }
     }
 
+    public String getEAN()
+    {
+        return EAN;
+    }
 
     public void setIme(String ime)
     {
