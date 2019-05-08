@@ -1,4 +1,6 @@
-import java.sql.Date;
+import com.google.gson.Gson;
+
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -20,7 +22,7 @@ public class Vaja1 {
         Artikli temp=new Artikli(artikli,kolicine);
         Artikli temp2=new Artikli(artikli2,kolicine2);
         Artikli temp3=new Artikli(artikli3,kolicine3);
-        a.add(new Racun(temp,"izdajatelj", podjetja.get(0).getDavcna_st(),"992019040210"));
+        a.add(new Racun(temp,"izdajatelj", podjetja.get(0).getDavcna_st(),"990190304107"));
         a.add(new Racun(temp2,"izdajatelj2", podjetja.get(1).getDavcna_st(),null));
         a.add(new Racun(temp3,"izdajatelj3", podjetja.get(2).getDavcna_st(), null));
 
@@ -47,6 +49,18 @@ public class Vaja1 {
        comps2.fromJson(Helper.readFromFile("test.json"));
        if(comps.size()==comps2.size())
            System.out.println("Po izvazanju ter uvazanju v JSON datoteko size() enak  ("+comps.size()+")");
+        Connection con=DBHelper.createConnection();
+
+        try {
+       Statement state= con.createStatement();
+       state.executeQuery("SHOW TABLES;");
+       ResultSet res=state.getResultSet();
+            res.next();
+            System.out.println("Rezultat mysql:"+state.getResultSet().getString(1));
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
     }
 }

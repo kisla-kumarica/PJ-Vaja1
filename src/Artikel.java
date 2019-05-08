@@ -28,7 +28,6 @@ public class Artikel implements Searchable {
         String EAN1=EAN.substring(0,7);
         EAN1+=teza;
         EAN=EAN1+EAN.substring(11);
-
     }
     public void setIdIzdelka(String id)
     {

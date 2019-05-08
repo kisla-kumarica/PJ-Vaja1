@@ -20,18 +20,20 @@ public class Racun implements Searchable {
         id=idmax;
         idmax++;
         this.artikli=artikli;
-        calcZnesek();
         if(kupon!=null)
             applyCoupon(kupon);
+        calcZnesek();
         this.izdajatelj=izdajatelj;
         this.davcna_st_podjetja=davcna_st_podjetja;
     }
     private void applyCoupon(String kupon)
     {
         Calendar cal =Calendar.getInstance();
-        cal.set(Integer.parseInt(kupon.substring(2,6)),Integer.parseInt(kupon.substring(6,8)),Integer.parseInt(kupon.substring(8,10)));
-        if(cal.compareTo(Calendar.getInstance())>0)
-            popust=Double.parseDouble(kupon.substring(10));
+        cal.set(Integer.parseInt("2"+kupon.substring(2,5)),Integer.parseInt(kupon.substring(5,7)),Integer.parseInt(kupon.substring(7,9)));
+        if(cal.after(Calendar.getInstance()))
+            popust=Double.parseDouble(kupon.substring(9,11));
+        else
+            popust=0;
     }
 
     @Override
@@ -87,7 +89,8 @@ public String toString()
         znesek=0;
         for(int i = 0;i<artikli.size();i++)
             znesek+=artikli.get(i).getCena()*artikli.getKolicine(i);
-        znesek*=(1+popust/100);
+        znesek*=(1-popust/100);
+        znesek=Math.round(znesek*100.0)/100.0;
 
     }
     public int getId() {
